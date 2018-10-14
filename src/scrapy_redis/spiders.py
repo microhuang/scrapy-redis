@@ -73,6 +73,7 @@ class RedisMixin(object):
         crawler.signals.connect(self.spider_idle, signal=signals.spider_idle)
 
     def next_requests(self):
+        """爬虫启动时或者空闲后，从种子队列获取启动任务"""
         """Returns a request to be scheduled or none."""
         use_set = self.settings.getbool('REDIS_START_URLS_AS_SET', defaults.START_URLS_AS_SET)
         fetch_one = self.server.spop if use_set else self.server.lpop
